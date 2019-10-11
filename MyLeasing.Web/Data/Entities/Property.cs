@@ -7,16 +7,16 @@ namespace MyLeasing.Web.Data.Entities
     {
         public int Id { get; set; }
 
-        [Display(Name = "Neighborhoo")]
+        [Display(Name = "Neighborhood")]
         [MaxLength(50, ErrorMessage = "The {0} field can not have more than {1} characters.")]
         [Required(ErrorMessage = "The field {0} is mandatory.")]
-        public string Neighborhoo { get; set; }
+        public string Neighborhood { get; set; }
 
 
         [Display(Name = "Adress")]
         [MaxLength(50, ErrorMessage = "The {0} field can not have more than {1} characters")]
         [Required(ErrorMessage = "The field {0} is mandatory")]
-        public string Adress { get; set; }
+        public string Address { get; set; }
 
         [Display(Name = "Price")]
         [MaxLength(50, ErrorMessage = "The {0} field can not have more than {1} characters ")]
@@ -38,8 +38,8 @@ namespace MyLeasing.Web.Data.Entities
         [Display(Name = "Has Parking Lot?")]
         public bool HasParkingLot { get; set; }
 
-        [Display(Name = "Is Available")]
-        public bool IsAvaiable { get; set; }
+        [Display(Name = "Is IsAvailable")]
+        public bool IsAvailable { get; set; }
 
         public string Remarks { get; set; }
         //===========Relaciones
