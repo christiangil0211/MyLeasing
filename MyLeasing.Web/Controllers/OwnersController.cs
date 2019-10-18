@@ -20,9 +20,9 @@ namespace MyLeasing.Web.Controllers
         private readonly IUserHelper _userHelper;
         private readonly ICombosHelper _combosHelper;
         private readonly IConverterHelper _converterHelper;
-        private readonly ImageHelper _imageHelper;
+        private readonly IImageHelper _imageHelper;
 
-        public OwnersController(DataContext dataContext, IUserHelper userHelper, ICombosHelper combosHelper, IConverterHelper converterHelper, ImageHelper imageHelper)
+        public OwnersController(DataContext dataContext, IUserHelper userHelper, ICombosHelper combosHelper, IConverterHelper converterHelper, IImageHelper imageHelper)
         {
             _dataContext = dataContext;
             _userHelper = userHelper;
@@ -340,5 +340,47 @@ namespace MyLeasing.Web.Controllers
             }
             return View(model); 
         }
+
+        public async Task<IActionResult> AddContract(int? id)
+        {
+            if (id == null)
+            {
+                return NotFound();
+            }
+
+            var property = await _dataContext.Properties
+                .Include(p => p.Owner)
+                .FirstOrDefaultAsync(p => p.Id == id.Value);
+            if (property == null)
+            {
+                return NotFound();
+            }
+
+            var model = new ContractViewModel
+            {
+                OwnerId = property.Owner.Id,
+                PropertyId = property.Id,
+                Lessees = _combosHelper.GetComboLessees(),
+                Price = property.Price,
+                StartDate = DateTime.Today,
+                EndDate = DateTime.Today.AddYears(1)               
+            };
+
+            return View(model);
+        }
+        [HttpPost]
+        public async Task<IActionResult> AddContract(ContractViewModel model)
+        {
+            if (ModelState.IsValid)
+            {
+                var contract = await _converterHelper.ToContractAsync(model, true);
+                _dataContext.Contracts.Add(contract);
+                await _dataContext.SaveChangesAsync();
+                return RedirectToAction($"{nameof(DetailsProperty)}/{model.OwnerId}");
+            }
+
+            return View(model);
+        }
+
     }
 }
