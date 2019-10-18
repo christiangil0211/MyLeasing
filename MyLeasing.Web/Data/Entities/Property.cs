@@ -19,7 +19,7 @@ namespace MyLeasing.Web.Data.Entities
         public string Address { get; set; }
 
         [Display(Name = "Price")]
-        [MaxLength(50, ErrorMessage = "The {0} field can not have more than {1} characters ")]
+        [DisplayFormat ( DataFormatString ="{0:C2}", ApplyFormatInEditMode = false)]
         [Required(ErrorMessage = "The field {0} is mandatory")]
         public decimal Price { get; set; }
 
