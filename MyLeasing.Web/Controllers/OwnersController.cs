@@ -376,11 +376,42 @@ namespace MyLeasing.Web.Controllers
                 var contract = await _converterHelper.ToContractAsync(model, true);
                 _dataContext.Contracts.Add(contract);
                 await _dataContext.SaveChangesAsync();
-                return RedirectToAction($"{nameof(DetailsProperty)}/{model.OwnerId}");
+                return RedirectToAction($"{nameof(DetailsProperty)}/{model.PropertyId}");
             }
 
             return View(model);
         }
 
+        public async Task<IActionResult> EditContract(int? id)
+        {
+            if (id == null)
+            {
+                return NotFound();
+            }
+            var contract = await _dataContext.Contracts
+                .Include(p => p.Owner)
+                .Include(p => p.Property)
+                .Include(p => p.Lessee)
+                .FirstOrDefaultAsync(p => p.Id == id.Value);
+            if (contract == null)
+            {
+                return NotFound();
+            }
+            return View(_converterHelper.ToContractViewModel(contract));
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> EditContract(ContractViewModel model)
+        {
+            if (ModelState.IsValid)
+            {
+                var contract = await _converterHelper.ToContractAsync(model, true);
+                _dataContext.Contracts.Add(contract);
+                await _dataContext.SaveChangesAsync();
+                return RedirectToAction($"{nameof(DetailsProperty)}/{model.PropertyId}");
+            }
+
+            return View(model);
+        }
     }
 }
