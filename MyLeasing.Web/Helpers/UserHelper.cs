@@ -46,6 +46,18 @@ namespace MyLeasing.Web.Helpers
             }
         }
 
+        public async Task<bool> DeleteUserAsync(string email)
+        {
+            var user = await GetUserByEmailAsync(email);
+            if (user == null)
+            {
+                return true;
+            }
+
+            var response = await _userManager.DeleteAsync(user);
+            return response.Succeeded;       
+        }
+
         public async Task<User> GetUserByEmailAsync(string email)
         {
             return await _userManager.FindByNameAsync(email);
@@ -68,6 +80,11 @@ namespace MyLeasing.Web.Helpers
         public async Task LogoutAsync()
         {
             await _signInManager.SignOutAsync();
+        }
+
+        public async Task<IdentityResult> UpDateUserAsync(User user)
+        {
+            return await _userManager.UpdateAsync(user);
         }
     }
 }
