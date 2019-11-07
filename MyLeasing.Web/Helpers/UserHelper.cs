@@ -22,7 +22,7 @@ namespace MyLeasing.Web.Helpers
         public UserManager<User> UserManager { get; } 
         public RoleManager<IdentityRole> RoleManager { get; }
 
-        public async Task<IdentityResult> AddUserAsync(User user, string password)
+        public async Task<IdentityResult> AddUserAsync(User user, string password) 
         {
             return await _userManager.CreateAsync(user, password);
         }
