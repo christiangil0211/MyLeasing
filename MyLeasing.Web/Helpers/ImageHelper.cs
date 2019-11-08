@@ -20,7 +20,7 @@ namespace MyLeasing.Web.Helpers
             {
                 await imageFile.CopyToAsync(stream);
             }
-            return $"~/image/Properties/{file}";
+            return $"~/images/Properties/{file}";
         }
     }
 }

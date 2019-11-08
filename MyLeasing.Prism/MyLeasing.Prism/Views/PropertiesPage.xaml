@@ -5,5 +5,11 @@
              prism:ViewModelLocator.AutowireViewModel="True"
              x:Class="MyLeasing.Prism.Views.PropertiesPage"
              Title="{Binding Title}">
-  
+    <StackLayout
+        Padding="10">
+        <ListView
+            HasUnevenRows="True"
+            ItemsSource="{Binding Properties}">
+        </ListView>
+    </StackLayout>
 </ContentPage>
