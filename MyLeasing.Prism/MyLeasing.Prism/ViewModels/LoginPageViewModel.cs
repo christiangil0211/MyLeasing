@@ -24,6 +24,8 @@ namespace MyLeasing.Prism.ViewModels
             IsEnabled = true;
             _navigationService = navigationService;
             _apiService = apiService;
+            Email = "cristhoper0211@hotmail.com";
+            Password = "123456";
         }
 
         public DelegateCommand LoginCommand => _loginCommand ?? (_loginCommand = new DelegateCommand(Login));

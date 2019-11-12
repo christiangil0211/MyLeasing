@@ -12,6 +12,7 @@ namespace MyLeasing.Prism.ViewModels
         public PropertiesPageViewModel(INavigationService navigationService) : base(navigationService)
         {
             Title = "Properties";
+            
         }
 
         public ObservableCollection<PropertyResponse> Properties 
